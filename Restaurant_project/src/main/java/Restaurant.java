@@ -45,6 +45,13 @@ public class Restaurant {
         }
         return null;
     }
+    private int getOrderTotal(List<Item>list) {
+	 int totalBill = 0;
+	 for (Item item: list) {
+		totalBill = totalBill + item.price;
+	 }
+	 return totalBill;
+    }
 
     public void addToMenu(String name, int price) {
         Item newItem = new Item(name,price);
@@ -71,5 +78,38 @@ public class Restaurant {
     public String getName() {
         return name;
     }
-
+    public int selectItems(Scanner sc) {
+	    System.out.println("See Menu and Select Items");
+	    System.out.println("Press 1: to select item 2: to remove item 3:finish Order 4: to give item a pass");
+	    List<Item>selectedItems = new ArrayList<Item>();
+	    if (sc == null)
+		    sc = new Scanner(System.in);
+	    int totalBill = 0;
+	    int inp = 0;
+	    while (1) {
+		for (Item item : menu) {
+			System.out.println("Item name"+ " "+item.name + "Item Price"+ " "+item.price);
+			inp = sc.nextInt();
+			switch (inp) {
+				case 1	: 
+					selectedItems.add(item);
+					break;
+				case 2	: 
+					if (selectedItems.contains(item))
+						selectedItems.remove(item);
+					break;
+				case 3	:
+				case 4	:
+					 break;
+				default :
+					break;
+			}
+			if (inp == 3)
+				break;
+	    }
+	    if (inp == 3)
+		    break;
+    } 
+   totalBill =  getOrderTotal(selectedItems);
+   return totalBill;
 }

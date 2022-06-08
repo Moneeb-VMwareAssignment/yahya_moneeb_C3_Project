@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+@ExtendWith(MockitoExtension.class)
 class RestaurantServiceTest {
 
     RestaurantService service = new RestaurantService();
@@ -63,7 +66,17 @@ class RestaurantServiceTest {
 
     @Test
     public void get_total_cost_of_list_of_items(){
-	restaurant.getOrderTotal(itemsList);
+    	Scanner spyscobj = Mockito.mock(Scanner.class);
+        int input1  = 1;
+	int input2  = 2;
+	int input3  = 3;
+	int input4  = 4;
+	Mockito.when(spyscobj.nextInt()).thenReturn(input1,input1,input1,input4,input2,input3);
+	int totalBill = restaurant.selectItems(spyscobj);
+	boolean isEqual = false;
+	if (totalBill == 388 )
+		isEqual = true;
+	assertTrue(isEqual);
     }
     //<<<<<<<<<<<<<<<<<<<<ADMIN: Bill Total>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
